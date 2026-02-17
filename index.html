@@ -101,21 +101,22 @@
         let opt = document.createElement('option');
         opt.value = i-1;
         opt.innerHTML = `Story ${i}`;
-        select.appendChild(opt);
-    }
-
-    function loadStory() {
-        const lang = document.getElementById('langSelect').value;
-        const idx = document.getElementById('storySelect').value;
-        const data = stories[lang] && stories[lang][idx] ? stories[lang][idx] : {t: "Coming Soon...", c: "I am translating this story for you right now!", m: ""};
-        
+        function loadStory() {
+    const lang = document.getElementById('langSelect').value;
+    const idx = document.getElementById('storySelect').value;
+    
+    // This checks if the story exists in our data
+    if (stories[lang] && stories[lang][idx]) {
+        const data = stories[lang][idx];
         document.getElementById('story-title').innerText = data.t;
         document.getElementById('story-content').innerText = data.c;
-        if(data.m) {
-            document.getElementById('story-moral').style.display = 'block';
-            document.getElementById('story-moral').innerText = "Moral: " + data.m;
-        } else {
-            document.getElementById('story-moral').style.display = 'none';
+        document.getElementById('story-moral').style.display = 'block';
+        document.getElementById('story-moral').innerText = "Moral: " + data.m;
+    } else {
+        // This shows if the story slot is empty
+        document.getElementById('story-title').innerText = "Story Coming Soon!";
+        document.getElementById('story-content').innerText = "I am currently writing this story for the library. Please check stories 1-30!";
+        document.getElementById('story-moral').style.display = 'none'
         }
     }
 
